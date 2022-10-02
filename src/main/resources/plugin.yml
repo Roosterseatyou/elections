@@ -1,0 +1,6 @@
+name: Elections
+version: '${version}'
+main: xyz.roosterseatyou.elections.Elections
+api-version: 1.19
+authors: [ Roosterseatyou, YoussefO07 ]
+description: A Paper Plugin that creates elections.
