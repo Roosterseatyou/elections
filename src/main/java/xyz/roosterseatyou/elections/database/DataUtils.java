@@ -25,12 +25,12 @@ public class DataUtils {
         }
     }
 
-    public static void updateHashMap(HashMap<UUID, Integer> map, Database db, int id){
+    public static void updateHashMap(HashMap<UUID, Integer> map, Database db, UUID id){
         try {
             String json = hashmapToJson(map);
             PreparedStatement ps = db.getConnection().prepareStatement("UPDATE elections SET hashmap = ? WHERE id = ?");
             ps.setObject(1, json);
-            ps.setInt(2, id);
+            ps.setString(2, id.toString());
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
@@ -40,7 +40,7 @@ public class DataUtils {
         }
     }
 
-    public static HashMap<UUID, Integer> getHashMap(Database db, int id) {
+    public static HashMap<UUID, Integer> getHashMap(Database db, UUID id) {
         HashMap<UUID, Integer> map;
         try {
             Statement statement = db.getConnection().createStatement();

@@ -20,9 +20,6 @@ public class DatabaseTestCommand implements CommandExecutor {
 
             DataUtils.storeHashMap(test, Elections.getDatabase());
             sender.sendMessage("stored hashmap");
-
-            HashMap<UUID, Integer> test2 = DataUtils.getHashMap(Elections.getDatabase(), 1);
-            sender.sendMessage("got hashmap: " + test2);
         }
         return true;
     }

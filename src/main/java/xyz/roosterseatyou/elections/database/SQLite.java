@@ -47,6 +47,8 @@ public class SQLite extends Database{
     private String CREATION_TABLE = "CREATE TABLE IF NOT EXISTS `elections` (\n" +
             "  `id` INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
             "  `hashmap` VARCHAR(10000) NOT NULL\n" +
+            "   `name` VARCHAR(100) NOT NULL\n" +
+            "   `description` VARCHAR(10000) NOT NULL\n" +
             ");";
 
     private void setCreationTable(String query){
