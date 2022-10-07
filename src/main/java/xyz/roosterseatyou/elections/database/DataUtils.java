@@ -3,7 +3,6 @@ package xyz.roosterseatyou.elections.database;
 import com.google.gson.Gson;
 import xyz.roosterseatyou.elections.Elections;
 
-import java.io.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
