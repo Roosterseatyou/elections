@@ -106,7 +106,6 @@ public class Election {
             if (statement.executeQuery("SELECT * FROM elections WHERE id = " + id).next()) {
                 return new Election(id, statement.executeQuery("SELECT name FROM elections WHERE id = " + id).getString("name"), statement.executeQuery("SELECT description FROM elections WHERE id = " + id).getString("description"), DataUtils.getHashMap(Elections.getDatabase(), id));
             } else {
-
                 return null;
             }
         } catch (SQLException e) {
