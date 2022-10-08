@@ -21,16 +21,16 @@ public class SQLite extends Database{
 
 
     public Connection getConnection() {
-        File dataFolder = new File(plugin.getDataFolder(), dbname+".db");
+        File dataFolder = new File(plugin.getDataFolder(), dbname + ".db");
         if (!dataFolder.exists()){
             try {
                 dataFolder.createNewFile();
             } catch (IOException e) {
-                plugin.getLogger().log(Level.SEVERE, "File write error: "+dbname+".db");
+                plugin.getLogger().log(Level.SEVERE, "File write error: " + dbname + ".db");
             }
         }
         try {
-            if(connection!=null&&!connection.isClosed()){
+            if(connection!=null && !connection.isClosed()){
                 return connection;
             }
             Class.forName("org.sqlite.JDBC");

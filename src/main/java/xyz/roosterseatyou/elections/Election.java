@@ -123,7 +123,6 @@ public class Election {
             if (statement.executeQuery("SELECT * FROM elections WHERE name = '" + name + "'").next()) {
                 return new Election(UUID.fromString(statement.executeQuery("SELECT id FROM elections WHERE name = '" + name + "'").getString("id")), name, statement.executeQuery("SELECT description FROM elections WHERE name = '" + name + "'").getString("description"), DataUtils.getHashMap(Elections.getDatabase(), UUID.fromString(statement.executeQuery("SELECT id FROM elections WHERE name = '" + name + "'").getString("id"))));
             } else {
-
                 return null;
             }
         } catch (SQLException e) {
