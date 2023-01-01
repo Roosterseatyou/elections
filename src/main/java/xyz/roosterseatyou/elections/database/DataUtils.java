@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class DataUtils {
-    public static void storeHashMap(HashMap<UUID, Integer> map, Database db){
+    public static void storeHashMap(HashMap map, Database db){
         try {
             String json = hashmapToJson(map);
             PreparedStatement ps = db.getConnection().prepareStatement("INSERT INTO elections (hashmap) VALUES (?)");
@@ -25,10 +25,10 @@ public class DataUtils {
         }
     }
 
-    public static void updateHashMap(HashMap<UUID, Integer> map, Database db, UUID id){
+    public static void updateHashMap(HashMap map, Database db, UUID id, String tableName, String columnName){
         try {
             String json = hashmapToJson(map);
-            PreparedStatement ps = db.getConnection().prepareStatement("UPDATE elections SET hashmap = ? WHERE id = ?");
+            PreparedStatement ps = db.getConnection().prepareStatement("UPDATE " + tableName + " SET " + columnName + " = ? WHERE id = ?");
             ps.setObject(1, json);
             ps.setString(2, id.toString());
             ps.executeUpdate();
@@ -40,12 +40,12 @@ public class DataUtils {
         }
     }
 
-    public static HashMap<UUID, Integer> getHashMap(Database db, UUID id) {
-        HashMap<UUID, Integer> map;
+    public static HashMap getHashMap(Database db, UUID id, String name, String col) {
+        HashMap map;
         try {
             Statement statement = db.getConnection().createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM elections WHERE id = " + id);
-            map = jsonToHashMap(rs.getString("hashmap"));
+            ResultSet rs = statement.executeQuery("SELECT col FROM elections WHERE id = " + id + " AND name = '" + name + "'");
+            map = jsonToHashMap(rs.getString(col));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -57,8 +57,19 @@ public class DataUtils {
         return gson.toJson(map);
     }
 
-    public static HashMap<UUID, Integer> jsonToHashMap(String json) {
+    public static HashMap jsonToHashMap(String json) {
         Gson gson = new Gson();
         return gson.fromJson(json, HashMap.class);
+    }
+
+    public static void executeSQLFile(Database db, String file){
+        try {
+            Statement statement = db.getConnection().createStatement();
+            statement.execute(file);
+        } catch (SQLException e) {
+            Elections.getInstance().getLogger().severe("Failed to execute SQL file: " + e.getMessage());
+            Elections.getInstance().getLogger().severe("Please report to https://github.com/Roosterseatyou");
+            e.printStackTrace();
+        }
     }
 }
